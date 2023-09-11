@@ -1,0 +1,7 @@
+python = 3.7
+django = 3.2.20
+
+
+anaconda ruby
+gem = 3.4.19
+sass
