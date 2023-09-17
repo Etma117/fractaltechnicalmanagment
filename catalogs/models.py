@@ -1,10 +1,16 @@
 from django.db import models
 
 # Create your models here.
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
 class Accesorio(models.Model):
     marca = models.CharField(max_length=20)
     modelo= models.CharField(max_length=40)
-    categoria = models.CharField(max_length=20)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     descripcion= models.CharField(max_length = 100)
     Cbarras = models.CharField(max_length=20, null=False)
 

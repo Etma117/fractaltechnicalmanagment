@@ -19,7 +19,7 @@
     {% for Accesorio in Accesorio %}
     <div class="col-sm-3 col-lg-3">
       <div class="dash-unit">
-        <dtitle>User Profile</dtitle>
+        <dtitle>{{ Accesorio.categoria }}</dtitle>
         <hr>
     <div class="thumbnail">
       <img src="{{ Accesorio.imagen.url }}" alt="{{ Accesorio.modelo }}" class="img-circle">
@@ -29,9 +29,10 @@
     <p>{{ Accesorio.descripcion }}</p>
     <p>Precio: {{ Accesorio.precio }}</p>
       <!-- Otros detalles del producto -->
-    <a href= "{% url 'AccesorioEditar' pk=Accesorio.id %}" class= "btn btn-success" type="button">Editar</a>
-    <a href = "{% url 'AccesorioEliminar' pk=Accesorio.id %}"class="btn btn-danger" type="submit">Eliminar</a> 
-    
+      <div atyle="display: flex;">
+        <a href= "{% url 'AccesorioEditar' pk=Accesorio.id %}" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
+        <a href = "{% url 'AccesorioEliminar' pk=Accesorio.id %}"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
+      </div>
     </div>
     </div>
      {% endfor %}
