@@ -20,6 +20,9 @@ class Accesorio(models.Model):
     activo = models.BooleanField(default=True, null=True, blank=True)
     creado = models.DateField(auto_now_add=True, null=True)
     modificado = models.DateField(auto_now=True, null=True, blank=True)
+ 
+    def __str__(self):
+        return self.nombre
 
 class Telefono(models.Model):
     marca = models.CharField(max_length=20)
@@ -33,3 +36,6 @@ class Telefono(models.Model):
     activo = models.BooleanField(default=True, null=True, blank=True)
     creado = models.DateField(auto_now_add=True, null=True)
     modificado = models.DateField(auto_now=True, null=True, blank=True)
+    
+    def __str__(self):
+        return self.nombre
