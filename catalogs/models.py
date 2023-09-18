@@ -22,7 +22,7 @@ class Accesorio(models.Model):
     modificado = models.DateField(auto_now=True, null=True, blank=True)
  
     def __str__(self):
-        return self.nombre
+        return self.modelo
 
 class Telefono(models.Model):
     marca = models.CharField(max_length=20)
@@ -38,4 +38,4 @@ class Telefono(models.Model):
     modificado = models.DateField(auto_now=True, null=True, blank=True)
     
     def __str__(self):
-        return self.nombre
+        return self.modelo
