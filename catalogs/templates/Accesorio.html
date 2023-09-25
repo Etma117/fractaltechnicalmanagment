@@ -57,5 +57,38 @@
     </div> -->
 
     <a href="{% url 'AccesorioCrear' %}" class="btn btn-success" role="button"> Crear Nuevo </a>
+ <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+    {%  if messages %}
+      {% for m in messages %}
+        <script>
+            Swal.fire({
+                "title": "Felicitaciones",
+                "text" : "{{m}}",
+                "icon" : "success"
+            })
+        </script>
+      {% endfor %}
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.eliminar-accesorio-btn').click(function () {
+            var accesorioId = $(this).data('accesorio-id');
+            $.ajax({
+                url: '/ruta-de-tu-vista-eliminar/' + accesorioId + '/',
+                type: 'DELETE',
+                success: function (data) {
+                    // Muestra el mensaje de éxito en un mensaje emergente
+                    alert(data.message);
+                    // O realiza cualquier otra acción que desees aquí
+                },
+                error: function () {
+                    // Maneja errores si es necesario
+                }
+            });
+        });
+    });
+    
 
 {% endblock %}
