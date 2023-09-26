@@ -1,5 +1,7 @@
 python = 3.7
 django = 3.2.20
+pillow            9.5.0
+django-pwa        1.1.0
 
 
 anaconda ruby
