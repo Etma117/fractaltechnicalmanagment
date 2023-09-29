@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'catalogs',
     'login',
     'mainpage',
+    'dashboard',
 
     'pwa',
 ]

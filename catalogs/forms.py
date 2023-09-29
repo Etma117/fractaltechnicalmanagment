@@ -1,5 +1,5 @@
 from django import forms
-from .models import Accesorio
+from .models import Accesorio, Refaccion, Telefono
 from django.forms import ClearableFileInput
 
 class AccesorioForm(forms.ModelForm):
@@ -9,7 +9,7 @@ class AccesorioForm(forms.ModelForm):
         
 class TelefonoForm(forms.ModelForm):
     class Meta:
-        model = Accesorio
+        model = Telefono
         fields = '__all__' 
         
 """class ProductoForm2(forms.ModelForm):
@@ -35,3 +35,8 @@ class TelefonoForm(forms.ModelForm):
             'activo': forms.CheckboxInput(attrs={'class': 'form-check-input', 'style': 'margin-left: 0;'}), 
             'imagen': forms.ImageField(widget=ClearableFileInput(attrs={'class': 'form-control'}))   
         }"""
+
+class RefaccionForm(forms.ModelForm):
+    class Meta:
+        model = Refaccion
+        fields = '__all__' 

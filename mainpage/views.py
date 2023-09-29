@@ -3,7 +3,7 @@ from django.shortcuts import HttpResponse
 
 # Create your views here.
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'mainpage.html')
 
 #class main(LoginRequiredMixin, ListView):
  #   model = Accesorio

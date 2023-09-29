@@ -66,7 +66,7 @@ class Refaccion(models.Model):      #modelorefacion
     precio = models.DecimalField(max_digits=10, decimal_places=2, default= 0)
     preciomayoreo = models.DecimalField(max_digits=10, decimal_places=2, default= 0)
 
-    activo = models.BooleanField(default=True, null=True, blank=True)
+    activo = models.BooleanField(default=True, null=True, blank=True) #añadir status -> pendiente, en proceso, terminado, entregado
     creado = models.DateField(auto_now_add=True, null=True)
     modificado = models.DateField(auto_now=True, null=True, blank=True)
     
