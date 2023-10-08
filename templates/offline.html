@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="container">
+
+    <!-- FIRST ROW OF BLOCKS -->     
+    <div class="row">
+
+
+        <div class="col-sm-3 col-lg-3" >
+            <div class="dash-unit" style= "align-items: center;" >
+                <dtitle>Informacion</dtitle>
+                    <hr>
+                <h1>Bienvenido a Fractal Tech</h1>
+                <h3>Todo lo de administracion 
+                </h3>
+                <h3>para tu laboratorio de reparación</h3>
+                <h3>Registralos aqui
+                </h3>
+            
+            </div>  
+        </div>
+
+     
+        <div class="col-sm-3 col-lg-3" >
+            <div class="dash-unit" style= "align-items: center;" >
+                <dtitle>Informacion</dtitle>
+                    <hr>
+                <h1>Sin servidor </h1>
+                <h3>¿Estas desconectado? 
+                </h3>
+                <h3>Estamos teniendo problemas con el 
+                </h3>
+                <h3>Servidor intentalo mas tarde
+                </h3>
+                <br>
+                <br>
+                    <div class= "info-user" style = "display: flex;">
+                    <a href= "{% url 'dashboard'  %}" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;" >Recargar Pagina</a> 
+                    <br>
+                
+            </div>
+        </div>
+
+
+        
+    </div>
+</div>
+
+{%endblock%}

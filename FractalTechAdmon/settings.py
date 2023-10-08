@@ -156,6 +156,8 @@ PWA_APP_DESCRIPTION = "Administracion en Telefonia movil y reparaciones"
 PWA_APP_DISPLAY = 'standalone'
 PWA_APP_ORIENTATION = 'any'
 PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_START_URL = '/'
+PWA_APP_SCOPE = '/'
 PWA_APP_ICONS = [
 	{
 		'src': 'static/images/logo.png',
@@ -164,7 +166,7 @@ PWA_APP_ICONS = [
 ]
 PWA_APP_ICONS_APPLE = [
 	{
-		'src': 'static/images/logopng',
+		'src': 'static/images/logo.png',
 		'sizes': '160x160'
 	}
 ]

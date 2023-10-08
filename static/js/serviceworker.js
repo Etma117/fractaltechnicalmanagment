@@ -9,8 +9,6 @@ var filesToCache = [
     '/static/css/login.css',
     
 ];
-
-// Cache on install
 self.addEventListener("install", event => {
     this.skipWaiting();
     event.waitUntil(
@@ -46,4 +44,19 @@ self.addEventListener("fetch", event => {
                 return caches.match('/offline/');
             })
     )
+});
+
+self.addEventListener('beforeinstallprompt', (e) => {
+    // Evita que el navegador muestre su propio mensaje
+    e.preventDefault();
+
+    // Muestra tu propio mensaje personalizado o un botón "Instalar" aquí
+    // Puedes utilizar una notificación o una interfaz personalizada
+    // e.userChoice.then(choiceResult => {
+    //     if (choiceResult.outcome === 'dismissed') {
+    //         console.log('El usuario canceló la instalación');
+    //     } else {
+    //         console.log('La aplicación se ha instalado');
+    //     }
+    // });
 });
