@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'login',
     'mainpage',
     'dashboard',
+    'repairlab',
 
     'pwa',
 ]

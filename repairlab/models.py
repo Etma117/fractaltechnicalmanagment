@@ -28,7 +28,7 @@ class Refaccion(models.Model):      #modelorefacion
     tipo_de_pieza= models.ForeignKey(TipoRefaccion, on_delete=models.CASCADE)
     calidad_refaccion= models.ForeignKey(CalidadRefaccion, on_delete=models.CASCADE)
     
-    existencias= models.CharField(max_length=40)
+    existencias= models.IntegerField(default=0)
     precio = models.DecimalField(max_digits=10, decimal_places=2, default= 0)
     preciomayoreo = models.DecimalField(max_digits=10, decimal_places=2, default= 0)
 

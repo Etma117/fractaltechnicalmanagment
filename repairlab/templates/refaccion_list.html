@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Refacciones{% endblock %}
+
+{% block content %} 
+  <h1>Todas las Refaciones</h1>
+    <div class= "row">
+      <div class = "col-lg-12">
+        <small class ="text-danger text-center"> <!--Mensaje de error, modificacion, etc(sustituido abajo)-->
+          {% if messages %}
+              {% for message in messages%}
+                {{message | safe}} <br>,
+              {% endfor%}
+          {% endif %}
+        </small>
+      </div>
+    </div>  
+
+    {% for Refaccion in Refaccion %}
+    <div class="col-sm-3 col-lg-3">
+      <div class="dash-unit">
+        <dtitle>{{ Refaccion.categoria }}</dtitle>
+        <hr>
+    <div class="thumbnail">
+      <img src="#" alt="{{ Refaccion.modelo }}" class="img-circle"> <!--nota del desarrollador: poner imagenes-->
+    </div><!-- /thumbnail -->
+    <h1>{{ Refaccion.marca }}</h1>
+    <h3>{{ Refaccion.modelos }}</h3>
+    <p>{{ Refaccion.tipo_de_pieza }}</p>
+    <p>{{ Refaccion.calidad_refaccion }}</p>
+    <p>Precio: {{ Refaccion.precio }}</p>
+      <!-- Otros detalles del producto -->
+      <div atyle="display: flex;">
+        <a href= "{% url 'RefaccionEditar' pk=Refaccion.id %}" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
+        <a href = "{% url 'RefaccionEliminar' pk=Refaccion.id %}"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
+      </div>
+    </div>
+    </div>
+     {% endfor %}
+      
+    
+
+    <!-- <div class="container" >
+      {% for Accesorio in Accesorio %}
+       <!-- BLOCK 
+      <div class="col-sm-3 col-lg-3">
+          <img src="{{ Accesorio.imagen.url }}" alt="{{ Accesorio.modelo }}" >
+          <h3>{{ Accesorio.marca }}</h3>
+          <h3>{{ Accesorio.modelo }}</h3>
+          <p>{{ Accesorio.descripcion }}</p>
+          <p>Precio: {{ Accesorio.precio }}</p>
+          <!-- Otros detalles del producto 
+          <a href= "{% url 'AccesorioEditar' pk=Accesorio.id %}" class= "btn btn-success" type="button">Editar</a>
+          <a href = "{% url 'AccesorioEliminar' pk=Accesorio.id %}"class="btn btn-danger" type="submit">Eliminar</a> 
+          
+        </div>
+      {% endfor %}
+    </div> -->
+
+    <a href="{% url 'RefaccionCrear' %}" class="btn btn-success" role="button"> Crear Nuevo </a>
+ <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+    {%  if messages %}
+      {% for m in messages %}
+        <script>
+            Swal.fire({
+                "title": "Listo creado o actualizado correctamente",
+                "text" : "{{m}}",
+                "icon" : "success"
+            })
+        </script>
+      {% endfor %}
+    {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.eliminar-accesorio-btn').click(function () {
+            var accesorioId = $(this).data('accesorio-id');
+            $.ajax({
+                url: '/ruta-de-tu-vista-eliminar/' + accesorioId + '/',
+                type: 'DELETE',
+                success: function (data) {
+                    // Muestra el mensaje de éxito en un mensaje emergente
+                    alert(data.message);
+                    // O realiza cualquier otra acción que desees aquí
+                },
+                error: function () {
+                    // Maneja errores si es necesario
+                }
+            });
+        });
+    });
+    
+
+{% endblock %}
