@@ -10,10 +10,13 @@
     <meta name="author" content="Carlos Alvarez - Alvarez.is & Etma117">
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
-
+	<link rel="stylesheet" href="{% static 'fullcalendar/main.min.css' %}">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-style.css' %}" rel="stylesheet">
     <link href="{% static 'css/flexslider.css' %}" rel="stylesheet">
+
+	<script src="{% static 'fullcalendar/main.min.js' %}"></script>
+	<script src="{% static 'fullcalendar/locales-all.min.js' %}"></script>
 
     <script type="text/javascript" src=" {% static 'js/jquery.js' %}" ></script>    
     <script type="text/javascript" src=" {% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
@@ -38,6 +41,9 @@
 
     <script type="text/javascript" src="js/admin.js"></script>
       
+	{% block css/js%}
+
+	{% endblock%}
     <style type="text/css">
       body {
         padding-top: 60px;

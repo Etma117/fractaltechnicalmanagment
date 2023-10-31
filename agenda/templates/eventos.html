@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+
+{% block titulo %}Agenda {% endblock %}
+{% block css/js %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            var calendar = $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events: '/all_events',
+                selectable: true,
+                selectHelper: true,
+                editable: true,
+                eventLimit: true,
+                select: function (start, end, allDay) {
+                    var title = prompt("Enter Event Title");
+                    if (title) {
+                        var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                        var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                        $.ajax({
+                            type: "GET",
+                            url: '/add_event',
+                            data: {'title': title, 'start': start, 'end': end},
+                            dataType: "json",
+                            success: function (data) {
+                                calendar.fullCalendar('refetchEvents');
+                                alert("Added Successfully");
+                            },
+                            error: function (data) {
+                                alert('There is a problem!!!');
+                            }
+                        });
+                    }
+                },
+                eventResize: function (event) {
+                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+                    var title = event.title;
+                    var id = event.id;
+                    $.ajax({
+                        type: "GET",
+                        url: '/update',
+                        data: {'title': title, 'start': start, 'end': end, 'id': id},
+                        dataType: "json",
+                        success: function (data) {
+                            calendar.fullCalendar('refetchEvents');
+                            alert('Event Update');
+                        },
+                        error: function (data) {
+                            alert('There is a problem!!!');
+                        }
+                    });
+                },
+
+                eventDrop: function (event) {
+                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+                    var title = event.title;
+                    var id = event.id;
+                    $.ajax({
+                        type: "GET",
+                        url: '/update',
+                        data: {'title': title, 'start': start, 'end': end, 'id': id},
+                        dataType: "json",
+                        success: function (data) {
+                            calendar.fullCalendar('refetchEvents');
+                            alert('Event Update');
+                        },
+                        error: function (data) {
+                            alert('There is a problem!!!');
+                        }
+                    });
+                },
+
+                eventClick: function (event) {
+                    if (confirm("Are you sure you want to remove it?")) {
+                        var id = event.id;
+                        $.ajax({
+                            type: "GET",
+                            url: '/remove',
+                            data: {'id': id},
+                            dataType: "json",
+                            success: function (data) {
+                                calendar.fullCalendar('refetchEvents');
+                                alert('Event Removed');
+                            },
+                            error: function (data) {
+                                alert('There is a problem!!!');
+                            }
+                        });
+                    }
+                },
+
+            });
+        });
+
+    </script>
+
+{%endblock%}
+
+{% block content %}
+    <h1>Evento</h1>
+    <div id="calendario"></div>
+    <script>
+        $(document).ready(function() {
+            $('#calendario').fullCalendar({
+                defaultView: 'month',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events: [
+                    {% for Evento in Eventos %}
+                    {
+                        title: "{{ Evento.tipo_evento}}",
+                        start: '{{ Evento.fecha_hora|date:"Y-m-d" }}'
+                        
+                    },
+                    {% endfor %}
+                ],
+                eventClick: function(info) {
+                    alert('Título: ' + info.event.title + '\nDescripción: ' + info.event.extendedProps.description);
+                }
+            });
+        });
+    </script>
+        
+    </div>
+    
+    
+    <!-- 
+        <div class= "row">
+         <div class = "col-lg-12">
+            <small class ="text-danger text-center"> 
+            {% if messages %}
+                {% for message in messages%}
+                    {{message | safe}} <br>,
+                {% endfor%}
+            {% endif %}
+            </small>
+         </div>
+        </div>  
+
+        {% for Evento in Eventos %}
+        <div class="col-sm-3 col-lg-3">
+         <div class="dash-unit">
+            <dtitle>{{ Evento.titulo }}</dtitle>
+            <hr>
+        
+        <h1>{{ telefono.marca }}</h1>        
+        <h3>{{ Evento.fecha_hora }}</p>
+        <p>{{ Evento.get_tipo_evento_display }}</p>
+        <h3>{{ telefono.modelo }}</h3>
+        <p>{{ telefono.tipo_de_reparacion }}</p>
+        <p>Precio: {{ telefono.precio }}</p>
+        <p>Estado:{{telefono.status}}</p>
+        <!-- Otros detalles del producto 
+        <div atyle="display: flex;">
+            <a href= "#" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
+            <a href = "#"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
+        </div>
+        {% endfor %}
+
+    <p>{{ evento.descripcion }}</p>
+
+    Muestra la información del teléfono asociado 
+    <h2>Información del Teléfono Asociado</h2>
+    <p>Nombre: {{ telefono.nombreCliente }}</p>
+    <p>Número: {{ telefono.marca }}</p>
+    <p>Número: {{ telefono.modelo }}</p>
+
+    <!-- Muestra el estado de reparación
+    <h2>Estado de Reparación</h2>
+    <p>Estado:{{telefono.status}}</p>
+     -->
+{% endblock %}
