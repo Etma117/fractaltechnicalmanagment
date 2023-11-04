@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+
+{% block titulo %}Agenda {% endblock %}
+{% block css/js %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js"></script>
+
+
+{%endblock%}
+
+{% block content %}
+<h2>Eventos</h2>
+<div class= "row">
+    <div class = "col-lg-12">
+        <small class ="text-danger text-center"> <!--Mensaje de error, modificacion, etc(sustituido abajo)-->
+        {% if messages %}
+            {% for message in messages%}
+                {{message | safe}} <br>,
+            {% endfor%}
+        {% endif %}
+        </small>
+    </div>
+    </div>  
+<div class="col-sm-8 col-lg-8">
+    <div class="dash-unit">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Tipo
+                </th>
+                <th>
+                    Dia
+                </th>
+                <th>
+                    Descricion
+                </th>
+                <th>
+                    Telefono a reparar
+                </th>
+                <th>
+                    Opciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evento in evento %}
+            <tr>
+                <td>
+                    <a href="{% url 'detalle_evento' evento_id=evento.id %}"> {{ evento.id }}</a>
+                </td>
+                <td>
+                    {{ evento.tipo_evento }}
+                </td>
+                <td>
+                    {{ evento.fecha_hora|date:"d/m/Y" }}
+                </td>
+                <td>
+                    {{ evento.descripcion }}
+                </td>
+                <td>
+                    {{ evento.telefono }}
+                </td>
+                <td>
+                    <a href="#" class="text-primary" style="padding-left: 10px; text-decoration: none;">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="#" class="mr-1 text-danger" style="padding-left: 10px; text-decoration: none;">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+            $('#calendario').fullCalendar({
+                defaultView: 'month',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events: "{% url 'get_events' %}",  // URL de la vista que obtiene los eventos
+            });
+        });
+    </script>
+    
+    </div> 
+</div>       
+</div>
+    
+    
+    <!-- 
+        <div class= "row">
+         <div class = "col-lg-12">
+            <small class ="text-danger text-center"> 
+            {% if messages %}
+                {% for message in messages%}
+                    {{message | safe}} <br>,
+                {% endfor%}
+            {% endif %}
+            </small>
+         </div>
+        </div>  
+
+        {% for Evento in Eventos %}
+        <div class="col-sm-3 col-lg-3">
+         <div class="dash-unit">
+            <dtitle>{{ Evento.titulo }}</dtitle>
+            <hr>
+        
+        <h1>{{ telefono.marca }}</h1>        
+        <h3>{{ Evento.fecha_hora }}</p>
+        <p>{{ Evento.get_tipo_evento_display }}</p>
+        <h3>{{ telefono.modelo }}</h3>
+        <p>{{ telefono.tipo_de_reparacion }}</p>
+        <p>Precio: {{ telefono.precio }}</p>
+        <p>Estado:{{telefono.status}}</p>
+        <!-- Otros detalles del producto 
+        <div atyle="display: flex;">
+            <a href= "#" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
+            <a href = "#"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
+        </div>
+        {% endfor %}
+
+    <p>{{ evento.descripcion }}</p>
+
+    Muestra la información del teléfono asociado 
+    <h2>Información del Teléfono Asociado</h2>
+    <p>Nombre: {{ telefono.nombreCliente }}</p>
+    <p>Número: {{ telefono.marca }}</p>
+    <p>Número: {{ telefono.modelo }}</p>
+
+    <!-- Muestra el estado de reparación
+    <h2>Estado de Reparación</h2>
+    <p>Estado:{{telefono.status}}</p>
+     -->
+{% endblock %}

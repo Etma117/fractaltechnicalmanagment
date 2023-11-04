@@ -13,12 +13,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 # Create your views here.
 def home(request):
-    return render(request,'catalogos.html')
+    return render(request,'catalogs.html')
 
 
 class RefaccionListar(LoginRequiredMixin, ListView):
     model = Refaccion
-    template_name = 'refaccion_list.html' #crear tempaltre*/*/*
+    template_name = 'refaccion_list.html' 
     context_object_name = 'Refaccion'
     success_url = 'Refaccion'
 

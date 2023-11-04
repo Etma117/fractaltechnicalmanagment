@@ -53,23 +53,35 @@
 			  </div>
 	  </div>
 
-      <!-- DONUT CHART BLOCK -->
+      <!-- Agenda de Trabajo-->
         <div class="col-sm-3 col-lg-3">
       		<div class="dash-unit">
-		  		<dtitle>Site Bandwidth</dtitle>
+		  		<dtitle>Agenda de Trabajo</dtitle>
 		  		<hr>
-	        	<div id="load"></div>
-	        	<h2>95%</h2>
+	        	<h3>Consulta aqui la agenda de Trabajo</h3>
+				<div class= "info-user" style = "display: flex;">
+				<a href= "{% url 'agenda'  %}" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;" >Agenda</a> 
+				</div> <!--Agregar el evento mas antiguo con el status pendiente-->
+				<br>
 			</div>
         </div>
+		
 
       <!-- DONUT CHART BLOCK -->
         <div class="col-sm-3 col-lg-3">
       		<div class="dash-unit">
-		  		<dtitle>Disk Space</dtitle>
+		  		<dtitle>Inventario</dtitle>
 		  		<hr>
-	        	<div id="space"></div>
-	        	<h2>65%</h2>
+				<h1> ¿Nuevo inventario?</h1>	
+				<hr>       	
+	        	<h3>Registra las nuevas entradas</h3>
+				<hr>
+				<div class= "info-user" style = "display: flex;">
+					<a href= "{% url 'RefaccionCrear'  %}" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;" >Nueva Refaccion</a> 
+					<br>
+					<a href = "{% url 'Refaccion' %}"class="btn btn-success" type="submit" style="flex: 1 ; margin: 5px;" >Ver Todo</a> 
+					 </div> 
+
 			</div>
         </div>
                      
@@ -88,7 +100,7 @@
 			        <ul class="mail">
 			            <li>
 			                <i class="unread"></i>
-			                <img class="avatar" src="images/photo01.jpeg" alt="avatar">
+			                <img class="avatar" src="{% static 'images/photo01.jpeg' %}" alt="avatar">
 			                <p class="sender">Adam W.</p>
 			                <p class="message"><strong>Working</strong> - This is the last...</p>
 			                <div class="actions">
@@ -100,7 +112,7 @@
 			            </li>
 			            <li>
 			                <i class="read"></i>
-			                <img class="avatar" src="images/photo02.jpg" alt="avatar">
+			                <img class="avatar" src="{% static 'images/photo02.jpg' %}" alt="avatar">
 			                <p class="sender">Dan E.</p>
 			                <p class="message"><strong>Hey man!</strong> - You have to taste ...</p>
 			                <div class="actions">
@@ -112,7 +124,7 @@
 			            </li>
 			            <li>
 			                <i class="read"></i>
-			                <img class="avatar" src="images/photo03.jpg" alt="avatar">
+			                <img class="avatar" src="{% static 'images/photo03.jpg' %}" alt="avatar">
 			                <p class="sender">Leonard N.</p>
 			                <p class="message"><strong>New Mac :D</strong> - So happy with ...</p>
 			                <div class="actions">
@@ -124,7 +136,7 @@
 			            </li>
 			            <li>
 			                <i class="read"></i>
-			                <img class="avatar" src="images/photo04.jpg" alt="avatar">
+			                <img class="avatar" src="{% static 'images/photo04.jpg' %}" alt="avatar">
 			                <p class="sender">Peter B.</p>
 			                <p class="message"><strong>Thank you</strong> - Finally I can ...</p>
 			                <div class="actions">
@@ -169,7 +181,7 @@
 					<br>
 					<p><bold>$156</bold> | <bad>Denied</bad></p>
 					<br>
-					<p><img src="images/up-small.png" alt=""> 12% Compared Last Month</p>
+					<p><img src="{% static 'images/up-small.png' %}" alt=""> 12% Compared Last Month</p>
 
 				</div>
 
@@ -185,8 +197,8 @@
 	      		<br>
 	            <div class="flexslider">
 					<ul class="slides">
-						<li><img src="images/slide01.png" alt="slider"></li>
-						<li><img src="images/slide02.png" alt="slider"></li>
+						<li><img src="{% static 'images/slide01.png' %}" alt="slider"></li>
+						<li><img src="{% static 'images/slide02.png' %}" alt="slider"></li>
 					</ul>
             </div>
 				<div class="cont">
@@ -244,7 +256,7 @@
 	      		<hr>
 	      		<div class="cont">
       			<p><bold>388</bold></p>
-      			<p><img src="images/up-small.png" alt=""> 412 Max. | <img src="images/down-small.png" alt=""> 89 Min.</p>
+      			<p><img src="{% static 'images/up-small.png' %}" alt=""> 412 Max. | <img src="{% static 'images/down-small.png' %}" alt=""> 89 Min.</p>
 	      		</div>
       		</div>
       		
@@ -254,7 +266,7 @@
 	      		<hr>
 	      		<div class="cont">
       			<p><bold>145.0K</bold></p>
-      			<p><img src="images/up-small.png" alt=""> 23.88%</p>
+      			<p><img src="{% static 'images/up-small.png' %}" alt=""> 23.88%</p>
 	      		</div>
       		</div>
       	</div>
@@ -444,7 +456,7 @@
 	      		<dtitle>Last Registered User</dtitle>
 	      		<hr>
 	      			<div class="cont2">
-	      				<img src="images/user-avatar.jpg" alt="">
+	      				<img src="{% static 'images/user-avatar.jpg' %}" alt="">
 	      				<br>
 	      				<br>
 	      				<p>Paul Smith</p>
@@ -522,7 +534,7 @@
       	<div class="container">
       		<div class="row">
       			<div class="col-sm-12 col-lg-12">
-      			<p><img src="images/logo.png" alt=""></p>
+      			<p><img src="{% static 'images/logo.png' %}" alt=""></p>
       			<p>Blocks Dashboard Theme - Crafted With Love - Copyright 2013</p>
       			</div>
 				  <h1>{{ user.get_all_permissions }}</h1>

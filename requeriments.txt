@@ -1,9 +1,8 @@
-python = 3.7
-django = 3.2.20
-pillow            9.5.0
-django-pwa        1.1.0
+python==3.7
+django==3.2.20
+pillow==9.5.0
+django-pwa==1.1.0
 
 
-anaconda ruby
-gem = 3.4.19
-sass
+node.js
+npm fullcalendar
