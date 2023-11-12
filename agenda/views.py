@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
+from .forms import AgendaForm
 from django.http import JsonResponse
+from django.views import View
+from .models import Evento
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
 
 # Create your views here.
 from .models import Evento
@@ -21,6 +27,10 @@ def calendar(request):
     }
     return render(request,'eventos1.html',context)
 
+def ver_calendario(request):
+    eventos = Evento.objects.all()
+    return render(request, 'eventos1.html', {'eventos': eventos})
+
 def all_events(request):                                                                                                 
     eventos = Evento.objects.all()                                                                                    
     out = []                                                                                                             
@@ -32,43 +42,48 @@ def all_events(request):
                                                                        
         })                                                                                                               
                                                                                                                      
-    return JsonResponse(out, safe=False)  
-
-def add_event(request):
-    start = request.GET.get("start", None)
-    end = request.GET.get("end", None)
-    title = request.GET.get("title", None)
-    event = Evento(name=str(title), start=start, end=end)
-    event.save()
-    data = {}
-    return JsonResponse(data)
-
-
-def update(request):
-    start = request.GET.get("start", None)
-    end = request.GET.get("end", None)
-    title = request.GET.get("title", None)
-    id = request.GET.get("id", None)
-    event = Evento.objects.get(id=id)
-    event.start = start
-    event.end = end
-    event.name = title
-    event.save()
-    data = {}
-    return JsonResponse(data)
-
-
-def remove(request):
-    id = request.GET.get("id", None)
-    event = Evento.objects.get(id=id)
-    event.delete()
-    data = {}
-    return JsonResponse(data)
+    return JsonResponse(out, safe=False) 
 
 
 class EventoListar(ListView):
     model = Evento
     template_name = 'eventos.html' 
     context_object_name = 'evento'
-    fields = ['tipo_evento', 'fecha_hora', 'horario']
+    fields = ['tipo_evento', 'fecha_inicio', 'hora_inicio','hora_termino']
     success_url = 'Eventos'
+
+    def get_queryset(self):
+        queryset = self.model.objects.filter(activo = True)
+        return queryset
+    
+
+class EventoCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView, PermissionRequiredMixin):
+    model = Evento
+    template_name = 'crear_Accesorio.html'
+    context_object_name = 'Accesorio'
+    form_class = AgendaForm
+    success_url = 'agenda'
+    
+    success_message = 'Evento agendado...'
+
+    login_url = 'login'  # URL de inicio de sesión
+    redirect_field_name = 'next'  # Nombre del campo de redireccionamiento  agenda.change_evento
+
+    permission_required = 'agenda.add_evento'
+    raise_exception = True 
+
+class EventApiView(View):
+    def get(self, request, *args, **kwargs):
+        eventos = Evento.objects.all()
+        data = [
+            {
+                'title': evento.titulo,
+                'start': evento.fecha.isoformat() + 'T' + evento.hora.isoformat(),
+                'tipo_evento': evento.get_tipo_evento_display(),
+                'telefono': str(evento.telefono),
+                'descripcion': evento.descripcion,
+                'estado_reparacion': evento.estado_reparacion
+            }
+            for evento in eventos
+        ]
+        return JsonResponse(data, safe=False)
