@@ -6,7 +6,7 @@ from .views import AccesorioListar, AccesorioCrearView, AccesorioEditarView, Acc
 
 urlpatterns = [
     path('',views.home, name='home' ),
-    path('Accesorio/', AccesorioListar.as_view(), name='Accesorio' ),
+    path('accesorios/', AccesorioListar.as_view(), name='accesorios' ),
     path('AccesorioCrear', AccesorioCrearView.as_view(), name= 'AccesorioCrear'),
     path('AccesorioModificar/<int:pk>/', AccesorioEditarView.as_view(), name="AccesorioEditar"),
     path('AccesorioEliminar/<int:pk>/', AccesorioEliminarView.as_view(), name='AccesorioEliminar')

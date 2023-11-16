@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView
 from .forms import AgendaForm
 from django.http import JsonResponse
 from django.views import View
@@ -12,12 +12,43 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 # Create your views here.
 from .models import Evento
 
+
+
+class EventoDetailView(LoginRequiredMixin,PermissionRequiredMixin,DetailView):
+    model = Evento
+    template_name = 'detalle_evento.html'  
+    context_object_name = 'evento'
+
+    login_url = 'login'  # URL de inicio de sesión
+    redirect_field_name = 'next'  # Nombre del campo de redireccionamiento  agenda.change_evento
+
+    permission_required = 'agenda.view_evento'
+    raise_exception = True 
+
+class EventoUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+    model = Evento
+    form_class = AgendaForm
+    template_name = 'crear_Accesorio.html'  
+    success_url = reverse_lazy('agenda')  
+    
+    
+    login_url = 'login'  # URL de inicio de sesión
+    redirect_field_name = 'next'  # Nombre del campo de redireccionamiento  agenda.change_evento
+
+    permission_required = 'agenda.change_evento'
+    raise_exception = True 
+
+
+
 def detalle_evento(request, evento_id):
     evento = Evento.objects.get(id=evento_id)
     telefono = evento.telefono
-    estado_reparacion = telefono.status  # Se obtiene el estado de reparación del teléfono , 
 
-    return render(request, 'detalle_evento.html', {'evento': evento, 'telefono': telefono, 'estado_reparacion': estado_reparacion})
+   # if telefono.status is not None:
+     #   estado_reparacion = telefono.status  # Se obtiene el estado de reparación del teléfono , 
+    
+
+    return render(request, 'detalle_evento.html', {'evento': evento, 'telefono': telefono})
 
 
 def calendar(request):
@@ -72,18 +103,3 @@ class EventoCrear(LoginRequiredMixin, SuccessMessageMixin, CreateView, Permissio
     permission_required = 'agenda.add_evento'
     raise_exception = True 
 
-class EventApiView(View):
-    def get(self, request, *args, **kwargs):
-        eventos = Evento.objects.all()
-        data = [
-            {
-                'title': evento.titulo,
-                'start': evento.fecha.isoformat() + 'T' + evento.hora.isoformat(),
-                'tipo_evento': evento.get_tipo_evento_display(),
-                'telefono': str(evento.telefono),
-                'descripcion': evento.descripcion,
-                'estado_reparacion': evento.estado_reparacion
-            }
-            for evento in eventos
-        ]
-        return JsonResponse(data, safe=False)

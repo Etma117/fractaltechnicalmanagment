@@ -3,10 +3,29 @@
 {% block title %}Eliminando Producto {% endblock %}
 
 {% block content %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        <h2> ¿Estas seguro(a) de eliminar el producto {{producto.nombre}}?</h2>
-        <button type="submit" class="btn btn-danger"> Eliminar </button>
-        <a href="{% url 'Accesorio' %}" class="btn btn-success"> Cancelar </a>
-    </form>
+<div class="row" style="display: flex; margin: auto;">
+    <div class="col-lg-8 col-lg-7 mx-auto" style="margin: auto;">
+        <div class="dash-unit" style="height: 750px; padding: 20px; margin: auto;">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <h2> ¿Estas seguro(a) de eliminar el producto {{accesorio.marca}} {{accesorio.modelo}} ?</h2>
+                <hr>
+                <div class="thumbnail">
+                    <img src="{{ accesorio.imagen.url }}" class="img-thumbnail" width="200" height="200"  alt="{{ accesorio.modelo }}">
+                </div>
+                <hr>
+                <h1>{{ accesorio.marca }}</h1>
+                <h3>{{ accesorio.modelo }}</h3>
+                <p>{{ accesorio.descripcion }}</p>
+                <p>Precio: {{ accesorio.precio }}</p>
+                <!-- Otros detalles del producto -->
+                
+                <div style=" margin: 20px; ">
+                    <button type="submit" class="btn btn-danger"> Eliminar </button>
+                    <a href="javascript:history.back()" class="btn btn-success">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>   
+</div>       
 {% endblock %}

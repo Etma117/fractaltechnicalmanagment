@@ -1,12 +1,26 @@
 from django import forms
-from .models import Accesorio, Refaccion, Telefono
+from .models import Accesorio, Telefono
 from django.forms import ClearableFileInput
 
 class AccesorioForm(forms.ModelForm):
     class Meta:
         model = Accesorio
-        fields = '__all__' 
-        
+        fields = ['marca', 'modelo', 'categoria', 'descripcion', 'Cbarras', 'existencias', 'precio', 'preciomayoreo', 'activo', 'imagen'
+        ]
+        labels={
+            'marca': "Marca",
+            'modelo': "Modelo",
+            'categoria': "Categoria",
+            'descripcion' : "Descripción",
+            'Cbarras': "Código de Barras",
+            'existencias' : "Numero de Existencias",
+            'precio' : "Precio al Publico",
+            'preciomayoreo' : "Precio a Mayoreo o Distribuidores",
+            'activo' : "Producto Activo o Deshabilitado",
+            'imagen' : "Imagen para el Accesorio",
+        }
+
+       
 class TelefonoForm(forms.ModelForm):
     class Meta:
         model = Telefono
@@ -33,10 +47,21 @@ class TelefonoForm(forms.ModelForm):
             'existencias': forms.NumberInput(attrs={'class': 'form-control'}),
             'precio': forms.NumberInput(attrs={'class': 'form-control'}),
             'activo': forms.CheckboxInput(attrs={'class': 'form-check-input', 'style': 'margin-left: 0;'}), 
-            'imagen': forms.ImageField(widget=ClearableFileInput(attrs={'class': 'form-control'}))   
+            'imagen': forms.ImageField(widget=ClearableFileInput(attrs={'class': 'form-control'})) 
+
+            widgets ={
+            'marca': forms.TextInput(attrs={'class': 'form-control'}),
+            'modelo': forms.TextInput(attrs={'class': 'form-control'}),
+            'categoria': "Categoria",
+            'descripcion' : "Descripción",
+            'Cbarras': "Código de Barras",
+            'existencias' : "Numero de Existencias",
+            'precio' : "Precio al Publico",
+            'preciomayoreo' : "Precio a Mayoreo o Distribuidores",
+            'activo' : "Producto Activo o Deshabilitado",
+            'imagen' : "Imagen para el Accesorio",
+        }
+        
+
         }"""
 
-class RefaccionForm(forms.ModelForm):
-    class Meta:
-        model = Refaccion
-        fields = '__all__' 

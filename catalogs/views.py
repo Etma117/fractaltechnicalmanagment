@@ -16,9 +16,9 @@ def home(request):
 
 class AccesorioListar(LoginRequiredMixin, ListView):
     model = Accesorio
-    template_name = 'Accesorio.html'
+    template_name = 'accesorios.html'
     context_object_name = 'Accesorio'
-    success_url = 'Accesorio'
+    success_url = 'accesorios'
 
     login_url = 'login'  # URL de inicio de sesión
     redirect_field_name = 'next'  # Nombre del campo de redireccionamiento
@@ -30,7 +30,7 @@ class AccesorioCrearView(LoginRequiredMixin, SuccessMessageMixin, CreateView ):
     template_name = 'crear_Accesorio.html'
     context_object_name = 'Accesorio'
     form_class = AccesorioForm
-    success_url = 'Accesorio'
+    success_url = reverse_lazy('accesorios')
     
     success_message = 'Accesorio Creado...'
 
@@ -45,7 +45,7 @@ class AccesorioEditarView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMes
     model = Accesorio
     template_name = 'crear_Accesorio.html'
     form_class =AccesorioForm
-    success_url = reverse_lazy('Accesorio')
+    success_url = reverse_lazy('accesorios')
     success_message = 'Accesorio actualizado correctamente...'
 
     login_url = 'login'  # URL de inicio de sesión
@@ -59,7 +59,7 @@ class AccesorioEliminarView(LoginRequiredMixin, PermissionRequiredMixin, Success
     model=Accesorio   
     template_name = 'eliminar_Accesorio.html'
     success_message = 'Accesosorio eliminado'
-    success_url = reverse_lazy('Accesorio')
+    success_url = reverse_lazy('accesorios')
     
 
     login_url = 'login'  # URL de inicio de sesión

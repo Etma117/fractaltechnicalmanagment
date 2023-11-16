@@ -16,7 +16,7 @@ class Evento(models.Model):
     descripcion = models.TextField(max_length=100)
     fecha_inicio = models.DateField(default=timezone.now)
     fecha_termino = models.DateField(null=True, blank=True)
-    hora_inicio = models.TimeField(auto_now=False, auto_now_add=False,default=0, null= True, blank=True)
+    hora_inicio = models.TimeField(auto_now=False, auto_now_add=False,default=timezone.now, null= True, blank=True)
     hora_termino= models.TimeField(auto_now=False, auto_now_add=False,default=0, null= True, blank=True)
     estado_reparacion = models.CharField(max_length=40, null=True, blank=True)
     activo = models.BooleanField(default=True)

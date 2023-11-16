@@ -80,6 +80,9 @@
               <div class="form-group">
                 <label for="id_password">Contraseña</label>
                 <input type="password" class="form-control" id="id_password" name="password" required>
+                <div class="col">
+                  <button class="btn btn-primary" type="button" onclick="mostrarContrasena()">Mostrar Contraseña</button>
+                </div>
               </div>
               <button type="submit" class="btn btn-success btn-block">Iniciar sesión</button>
             </form>
@@ -93,5 +96,20 @@
 </div><!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script>
+      function mostrarContrasena() {
+          var campoContrasena = document.getElementById("id_password");
+
+          // Verifica el tipo de entrada actual del campo de contraseña
+          if (campoContrasena.type === "password") {
+            // Si es una contraseña oculta, cambia a texto para mostrarla
+            campoContrasena.type = "text";
+          } else {
+            // Si es texto visible, cambia a contraseña para ocultarla
+            campoContrasena.type = "password";
+          }
+        }
+    </script>
     <script type="text/javascript" src="js/bootstrap.js"></script>  
+    
 </body></html>

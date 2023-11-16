@@ -3,26 +3,48 @@
 {% block titulo %}Agenda{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href=" {% static 'fullcalendar/lib/main.css' %}">
+
+<style>
+    body {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px;
+        margin-top: 70px; 
+    }
+
+    #tabla-eventos {
+        flex: 1; /* Toma el 100% del espacio disponible en la izquierda */
+        margin-right: 20px; /* Espacio entre la tabla y el calendario */
+    }
+
+    #calendar {
+        flex: 1; /* Toma el 100% del espacio disponible en la derecha */
+    }
+</style>
     
 {% endblock extra_css%}
 
 {% block extra_js %}
-    <link rel="stylesheet" href=" {% static 'fullcalendar/lib/main.js' %}">
-    <link rel="stylesheet" href=" {% static 'fullcalendar/lib/locales-all.js' %}">
+<script src="{% static 'fullcalendar/lib/main.js' %}"></script>
+<script src="{% static 'fullcalendar/lib/locales-all.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function(){
             var calendarUI = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarUI, {
                 headerToolbar:{
                     left: 'prev,next today',
-                    center:'title',
+                    center:'title',                    
+                    right: 'dayGridMonth,dayGridWeek,dayGridDay',
                 },
                 events: [
                 {%for evento in object_list%}
                     {
-                        title: "{{evento.titulo}}",
-                        start: '{{evento.fecha_inicio | date:"Y-m-d"}}',
-                        end: '{{evento.fecha_termino | date:"Y-m-d"}}',
+                        title: "{{evento.titulo}} {{evento.tipo_evento}}",
+                        start: '{{evento.fecha_inicio | date:"Y-m-d"}}T{{evento.hora_inicio | time:"H:i:s"}}', 
+                        end: '{{evento.fecha_termino | date:"Y-m-d"}}T{{evento.hora_termino | time:"H:i:s"}}',
                     },
                 {% endfor %}
                 ]
@@ -31,9 +53,16 @@
             calendar.setOption('locale','es');
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $(".evento-fila").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
 {% endblock extra_js%}
 {% block content %}
-<h2>Eventos</h2>
+
 <div class= "row">
     <div class = "col-lg-12">
         <small class ="text-danger text-center"> <!--Mensaje de error, modificacion, etc(sustituido abajo)-->
@@ -44,23 +73,25 @@
         {% endif %}
         </small>
     </div>
-    </div>  
-<div class="col-sm-8 col-lg-8">
-    <div class="dash-unit">
-    <table class="table">
+</div>  
+
+<div class="col-sm-8 col-lg-5">
+    <div class="dash-unit" style="height: 700px; padding: 20px; margin: 20px auto;"> 
+        <dtitle>Agenda de trabajo</dtitle>
+    <table class="table" id = "tabla-eventos">
         <thead>
             <tr>
                 <th>
                     ID
                 </th>
                 <th>
+                    Titulo
+                </th>
+                <th>
                     Tipo
                 </th>
                 <th>
                     Dia
-                </th>
-                <th>
-                    Descricion
                 </th>
                 <th>
                     Telefono a reparar
@@ -72,32 +103,29 @@
         </thead>
         <tbody>
             {% for evento in evento %}
-            <tr>
+            <tr class="evento-fila" data-href= "{% url 'detalle_evento' pk=evento.id %}" >
                 <td>
-                    <a href="{% url 'detalle_evento' evento_id=evento.id %}"> {{ evento.id }}</a>
+                    <a href="{% url 'detalle_evento' pk=evento.id %}"> {{ evento.id }}</a>
+                </td>
+                <td>
+                    {{ evento.titulo }}
                 </td>
                 <td>
                     {{ evento.tipo_evento }}
                 </td>
                 <td>
-                    {{ evento.fecha_hora|date:"d/m/Y" }}
-                </td>
-                <td>
-                    {{ evento.descripcion }}
+                    {{ evento.fecha_inicio|date:"d/m/Y" }}
                 </td>
                 <td>
                     {{ evento.telefono }}
                 </td>
                 <td>
-                    <a href="#" class="text-primary" style="padding-left: 10px; text-decoration: none;">
+                    <a href="{% url 'EventoEditar' pk=evento.id %}" class="text-primary" style="padding-left: 10px; text-decoration: none;">
                         <i class="fas fa-edit"></i>
                     </a>
                     <a href="#" class="mr-1 text-danger" style="padding-left: 10px; text-decoration: none;">
                         <i class="fas fa-trash-alt"></i>
                     </a>
-                </td>
-                <td>
-                    
                 </td>
             </tr>
 
@@ -115,53 +143,11 @@
     </div> 
 </div> 
 
-<div id="calendar" class="card" style="padding:20px;"></div>
+<div class="col-sm-6 col-lg-6">
+        <div class="dash-unit" style="height: 700px; padding: 20px; margin: 20px auto;"> 
+            <div id="calendar" class = "card" style="max-height: 90%; overflow: hidden;"></div>
+    </div>
+    </div>
 </div>
     
-    
-    <!-- 
-        <div class= "row">
-         <div class = "col-lg-12">
-            <small class ="text-danger text-center"> 
-            {% if messages %}
-                {% for message in messages%}
-                    {{message | safe}} <br>,
-                {% endfor%}
-            {% endif %}
-            </small>
-         </div>
-        </div>  
-
-        {% for Evento in Eventos %}
-        <div class="col-sm-3 col-lg-3">
-         <div class="dash-unit">
-            <dtitle>{{ Evento.titulo }}</dtitle>
-            <hr>
-        
-        <h1>{{ telefono.marca }}</h1>        
-        <h3>{{ Evento.fecha_hora }}</p>
-        <p>{{ Evento.get_tipo_evento_display }}</p>
-        <h3>{{ telefono.modelo }}</h3>
-        <p>{{ telefono.tipo_de_reparacion }}</p>
-        <p>Precio: {{ telefono.precio }}</p>
-        <p>Estado:{{telefono.status}}</p>
-        <!-- Otros detalles del producto 
-        <div atyle="display: flex;">
-            <a href= "#" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
-            <a href = "#"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
-        </div>
-        {% endfor %}
-
-    <p>{{ evento.descripcion }}</p>
-
-    Muestra la información del teléfono asociado 
-    <h2>Información del Teléfono Asociado</h2>
-    <p>Nombre: {{ telefono.nombreCliente }}</p>
-    <p>Número: {{ telefono.marca }}</p>
-    <p>Número: {{ telefono.modelo }}</p>
-
-    <!-- Muestra el estado de reparación
-    <h2>Estado de Reparación</h2>
-    <p>Estado:{{telefono.status}}</p>
-     -->
 {% endblock %}

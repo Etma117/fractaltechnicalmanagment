@@ -3,9 +3,10 @@
 {% block titulo %}Productos{% endblock %}
 
 {% block content %} 
-  <h1>Todos los Productos</h1>
+  
     <div class= "row">
       <div class = "col-lg-12">
+        <h1 style="color: white;">Todos los Accesorios</h1>
         <small class ="text-danger text-center"> <!--Mensaje de error, modificacion, etc-->
           {% if messages %}
               {% for message in messages%}
@@ -22,7 +23,7 @@
         <dtitle>{{ Accesorio.categoria }}</dtitle>
         <hr>
     <div class="thumbnail">
-      <img src="{{ Accesorio.imagen.url }}" alt="{{ Accesorio.modelo }}" class="img-circle">
+      <img src="{{ Accesorio.imagen.url }}" class="img-thumbnail" width="50" height="50"  alt="{{ Accesorio.modelo }}">
     </div><!-- /thumbnail -->
     <h1>{{ Accesorio.marca }}</h1>
     <h3>{{ Accesorio.modelo }}</h3>

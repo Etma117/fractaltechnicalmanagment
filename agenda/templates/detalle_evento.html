@@ -21,30 +21,34 @@
             <dtitle>{{ evento.titulo }}</dtitle>
             <hr>
             <h1> {{ evento.titulo }}</p>
-            <h1>{{ evento.fecha_hora }}</p>
+            <h1>{{ evento.fecha_inicio }}</p>
+
+            {% if evento.telefono %}
             <h1>{{ telefono.nombreCliente}} {{ telefono.appCliente }} {{ telefono.apm}}</p>
             <hr>
             <h3>Imei: {{ telefono.IMEI}}</p>
             <p>Año: {{telefono.año}}</p>                
             </div>
-        </div>
-
-        <div class="col-sm-3 col-lg-3">
-            <div class="dash-unit">
-                <dtitle>{{ evento.titulo }}</dtitle>
-                <hr>
-                <p>{{ evento.get_tipo_evento_display }}</p>
-                <h3>{{ telefono.modelo }}</h3>
-                <p>{{ telefono.tipo_de_reparacion }}</p>
-                <p>Precio: {{ telefono.precio }}</p>
-                <p>Estado:{{telefono.status}}</p>
-                <!-- Otros detalles del producto -->
-                    <div atyle="display: flex;">
-                        <a href= "#" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
-                        <a href = "#"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
-                    </div>
                 </div>
-            </div>
+
+                <div class="col-sm-3 col-lg-3">
+                    <div class="dash-unit">
+                        <dtitle>{{ evento.titulo }}</dtitle>
+                        <hr>
+                        <p>{{ evento.get_tipo_evento_display }}</p>
+                        <h3>{{ telefono.modelo }}</h3>
+                        <p>{{ telefono.tipo_de_reparacion }}</p>
+                        <p>Precio: {{ telefono.precio }}</p>
+                        <p>Estado:{{telefono.status}}</p>
+                        <!-- Otros detalles del producto -->
+                            <div atyle="display: flex;">
+                                <a href="{% url 'EventoEditar' pk=evento.id %}" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
+                                <a href = "#"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
+                            </div>
+                        </div>
+                    </div>
+
+            
 
             <div class="col-sm-3 col-lg-3">
                 <div class="dash-unit">
@@ -59,5 +63,9 @@
                     <p></p>                
                     </div>
                 </div>
+
+            {% else %}
+            <p>No hay información sobre el teléfono asociado a este evento.</p>
+            {% endif %}
                
 {% endblock %}
