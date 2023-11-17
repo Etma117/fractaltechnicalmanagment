@@ -1,35 +1,29 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="container">
-  <div class="row">
 
-    <div class="col-lg-6">      
+{% block content %}
+<div class="row" style="display: flex; margin: auto;">
+  <div class="col-lg-8 col-lg-7 mx-auto" style="margin: auto;">
+    <div class="dash-unit" style="height: auto; padding: 20px; margin: auto;">
+      <dtitle>Nuevo Refacción</dtitle>
+      <hr>
       <div id="register-wraper">
         <form id="register-form" class="form" method="post" enctype="multipart/form-data">
-            <legend>Nueva Refaccion</legend>
-        
-            <div class="body">
-          
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button class="btn btn-primary" type="submit">Guardar</button>
-                <a href ="{% url 'Refaccion' %}"class="btn btn-danger" type="submit">Cancelar</a> 
+                <a href="javascript:history.back()" class="btn btn-danger">Cancelar</a>
               </form>
               {% if form.errors %}
                 <div class="errors">
                     {{ form.errors }}
                 </div>
                 {% endif %}
-             </div>
       </div>
     </div> 
-  </div>
-</div>
-  
-
-
-{% endblock %}  
+  </div>  
+</div>  
+{% endblock %}
   
 
 

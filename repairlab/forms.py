@@ -16,7 +16,15 @@ class RefaccionForm(forms.ModelForm):
             'existencias': "Existencias",
             'precio': "Precio a publico",
             'preciomayoreo': "Precio a Mayoristas o Socios" 
-
+        }
+        widgets ={
+            'marca': forms.TextInput(attrs={'class': 'form-control'}),
+            'modelos': forms.TextInput(attrs={'class': 'form-control'}), #multiple Choices
+            'tipo_de_pieza': forms.Select(attrs={'class': 'form-control'}),
+            'calidad_refaccion': forms.Select(attrs={'class': 'form-control'}),
+            'existencias' : forms.NumberInput(attrs={'class': 'form-control'}),
+            'precio' : forms.NumberInput(attrs={'class': 'form-control'}),
+            'preciomayoreo' : forms.NumberInput(attrs={'class': 'form-control'}),
         }
 class ReparacionForm(forms.ModelForm):
     class Meta:
