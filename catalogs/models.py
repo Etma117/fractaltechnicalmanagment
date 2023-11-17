@@ -6,6 +6,20 @@ class Categoria(models.Model):  ##Categoria de Accesorios
 
     def __str__(self):
         return self.nombre
+    """
+    INSERT INTO catalogs_categoria (nombre) VALUES 
+  ('Estuches y Fundas'),
+  ('Protectores de Pantalla'),
+  ('Cargadores y Cables'),
+  ('Auriculares y Altavoces'),
+  ('Soportes y Monturas'),
+  ('Baterías Externas'),
+  ('Accesorios de Fotografía'),
+  ('Adaptadores y Convertidores'),
+  ('Accesorios de Audio y Micrófonos'),
+  ('Misceláneos');
+
+    """
 
 class Accesorio(models.Model):  ##ModeloAccesorios
     marca = models.CharField(max_length=20)
