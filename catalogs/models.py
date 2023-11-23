@@ -20,9 +20,14 @@ class Categoria(models.Model):  ##Categoria de Accesorios
   ('Misceláneos');
 
     """
+class Marca(models.Model):  ##Marcas para Accesorios
+    nombre = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nombre
 
 class Accesorio(models.Model):  ##ModeloAccesorios
-    marca = models.CharField(max_length=20)
+    marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
     modelo= models.CharField(max_length=40)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     descripcion= models.CharField(max_length = 100)

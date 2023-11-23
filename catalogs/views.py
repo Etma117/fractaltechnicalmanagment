@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .models import Accesorio
+from .models import Accesorio, Marca
 from .forms import AccesorioForm, TelefonoForm
 from django.contrib import messages
 from django.http import JsonResponse
@@ -14,6 +14,22 @@ def home(request):
     return render(request,'catalogos.html')
 
 
+
+class MarcaCreateView(LoginRequiredMixin, CreateView, PermissionRequiredMixin, SuccessMessageMixin):
+    model = Marca
+    template_name = 'crear_Accesorio.html'
+    fields = ['nombre']    
+    success_url = reverse_lazy('accesorios')
+
+    success_message = 'Accesorio Creado...'
+
+    login_url = 'login'  # URL de inicio de sesión
+    redirect_field_name = 'next'  # Nombre del campo de redireccionamiento
+
+    permission_required = 'catalogs.create_marca'
+    raise_exception = True  
+
+
 class AccesorioListar(LoginRequiredMixin, ListView):
     model = Accesorio
     template_name = 'accesorios.html'
@@ -25,7 +41,7 @@ class AccesorioListar(LoginRequiredMixin, ListView):
 
     
 
-class AccesorioCrearView(LoginRequiredMixin, SuccessMessageMixin, CreateView ):
+class AccesorioCrearView(LoginRequiredMixin, SuccessMessageMixin, CreateView, PermissionRequiredMixin):
     model = Accesorio
     template_name = 'crear_Accesorio.html'
     context_object_name = 'Accesorio'
