@@ -98,6 +98,20 @@ class AccesorioForm(forms.ModelForm):
             raise forms.ValidationError("El precio al mayoreo debe ser un valor positivo.")
         return preciomayoreo
     
+    def clean_existencias(self):
+        existencias = self.cleaned_data.get('existencias')
+        # Realiza tu validación personalizada para existencias
+        if existencias is not None and int(existencias) < 0:
+            raise forms.ValidationError("Las existencias deben ser un valor positivo.")
+        return existencias
+
+    def clean_Cbarras(self):
+        Cbarras = self.cleaned_data.get('Cbarras')
+        # Realiza tu validación personalizada para Cbarras
+        if Cbarras is not None and int(Cbarras) < 0:
+            raise forms.ValidationError("El valor del Codigo de barras no puede ser negativo")
+        return Cbarras
+    
        
 class TelefonoForm(forms.ModelForm):
     class Meta:

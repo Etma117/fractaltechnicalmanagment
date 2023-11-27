@@ -38,6 +38,10 @@ class AccesorioListar(LoginRequiredMixin, ListView):
 
     login_url = 'login'  # URL de inicio de sesión
     redirect_field_name = 'next'  # Nombre del campo de redireccionamiento
+ #busqueda
+ 
+
+
 
 class AccesorioCrearView(LoginRequiredMixin,CreateView, PermissionRequiredMixin):
     model = Accesorio
