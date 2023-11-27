@@ -28,7 +28,7 @@ class Marca(models.Model):  ##Marcas para Accesorios
 
 class Accesorio(models.Model):  ##ModeloAccesorios
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
-    modelo= models.CharField(max_length=40)
+    modelo= models.CharField(max_length=40, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     descripcion= models.CharField(max_length = 100)
     Cbarras = models.CharField(max_length=20, null=False)

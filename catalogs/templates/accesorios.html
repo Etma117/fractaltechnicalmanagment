@@ -7,13 +7,22 @@
     <div class= "row">
       <div class = "col-lg-12">
         <h1 style="color: white;">Todos los Accesorios</h1>
-        <small class ="text-danger text-center"> <!--Mensaje de error, modificacion, etc-->
+        
           {% if messages %}
               {% for message in messages%}
-                {{message | safe}} <br>,
+                {%if "Accesorio eliminado" in message%}
+                    <div class="alert alert-danger" role="alert"> <!--Mensaje de error, modificacion, etc-->
+                    {{message | safe}}
+                    </div>
+                {%else%}
+                  <div class="alert alert-info" role="alert"> <!--Mensaje de error, modificacion, etc-->
+                    {{message | safe}}
+                  </div>
+                  {%endif%}    
               {% endfor%}
+            
           {% endif %}
-        </small>
+        
       </div>
     </div>  
 
@@ -62,11 +71,19 @@
     {%  if messages %}
       {% for m in messages %}
         <script>
-            Swal.fire({
+          {% if "Accesorio eliminado" in m %}
+              Swal.fire({
+                "title": "Se ha eliminado",
+                "text" : "{{ m }}",
+                "icon" : "danger"
+              })
+          {% else %}
+              Swal.fire({
                 "title": "Felicitaciones",
-                "text" : "{{m}}",
+                "text" : "{{ m }}",
                 "icon" : "success"
-            })
+              })
+        {% endif %}
         </script>
       {% endfor %}
     {% endif %}

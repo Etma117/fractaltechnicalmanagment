@@ -9,12 +9,93 @@
       <div id="register-wraper">
         <form id="register-form" class="form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <!--{{ form.as_p }}-->
+
+
+                <!-- Campo 'marca' -->
+              <div style= "display: flex;">
+                  <label style="margin: auto; ">{{ form.marca.label}}</label>
+                  <div class = "row"style="margin: 15px; ">
+                    {{ form.marca }}
+                  </div>
+                  {{ form.marca.errors }}
+                  
+                  <!-- Campo 'nueva_marca' -->
+                  <label style="margin: 5px; ">{{ form.nueva_marca.label }}</label>
+                  <div class = "row"style="margin:auto; "></div>
+                  <input type="text" name="nueva_marca" maxlength="100" id="id_nueva_marca" style="margin: auto;">
+                  </div>
+                  {{ form.nueva_marca.errors }}
+              </div>
+              
+              <!-- Campo 'modelo' -->
+              <div>
+                <label for="{{ form.modelo.id_for_label }}">{{ form.modelo.label }}</label>
+                {{ form.modelo }}
+                {{ form.modelo.errors }}
+              </div>
+              
+              <!-- Campo 'categoria' -->
+              <div>
+                <label for="{{ form.categoria.id_for_label }}">{{ form.categoria.label }}</label>
+                {{ form.categoria }}
+                {{ form.categoria.errors }}
+              </div>
+              
+              <!-- Campo 'descripcion' -->
+              <div>
+                <label for="{{ form.descripcion.id_for_label }}">{{ form.descripcion.label }}</label>
+                {{ form.descripcion }}
+                {{ form.descripcion.errors }}
+              </div>
+              
+              <!-- Campo 'Cbarras' -->
+              <div>
+                <label for="{{ form.Cbarras.id_for_label }}">{{ form.Cbarras.label }}</label>
+                {{ form.Cbarras }}
+                {{ form.Cbarras.errors }}
+              </div>
+              
+              <!-- Campo 'existencias' -->
+              <div>
+                <label for="{{ form.existencias.id_for_label }}">{{ form.existencias.label }}</label>
+                {{ form.existencias }}
+                {{ form.existencias.errors }}
+              </div>
+              
+              <!-- Campo 'precio' -->
+              <div>
+                <label for="{{ form.precio.id_for_label }}">{{ form.precio.label }}</label>
+                {{ form.precio }}
+                {{ form.precio.errors }}
+              </div>
+              
+              <!-- Campo 'preciomayoreo' -->
+              <div>
+                <label for="{{ form.preciomayoreo.id_for_label }}">{{ form.preciomayoreo.label }}</label>
+                {{ form.preciomayoreo }}
+                {{ form.preciomayoreo.errors }}
+              </div>
+              
+              <!-- Campo 'activo' -->
+              <div>
+                <label for="{{ form.activo.id_for_label }}">{{ form.activo.label }}</label>
+                {{ form.activo }}
+                {{ form.activo.errors }}
+              </div>              
+              <!-- Campo 'imagen' -->
+              <div>
+                <label for="{{ form.imagen.id_for_label }}">{{ form.imagen.label }}</label>
+                {{ form.imagen }}
+                {{ form.imagen.errors }}
+            </div>
                 <button class="btn btn-primary" type="submit">Guardar</button>
                 <a href="javascript:history.back()" class="btn btn-danger">Cancelar</a>
               </form>
+
+
               {% if form.errors %}
-                <div class="errors">
+                <div class="alert alert-danger" >
                     {{ form.errors }}
                 </div>
                 {% endif %}

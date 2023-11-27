@@ -74,7 +74,7 @@ class AccesorioEditarView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMes
 class AccesorioEliminarView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
     model=Accesorio   
     template_name = 'eliminar_Accesorio.html'
-    success_message = 'Accesosorio eliminado'
+    success_message = 'Accesorio eliminado'
     success_url = reverse_lazy('accesorios')
     
 
@@ -83,12 +83,9 @@ class AccesorioEliminarView(LoginRequiredMixin, PermissionRequiredMixin, Success
 
     permission_required = 'catalogs.delete_accesorio'
     raise_exception = True  
-
-    #def delete(self, request, *args, **kwargs):
-     #   self.object = self.get_object()
-      #  self.object.delete()
-       # return JsonResponse({'message': 'Accesorio eliminado con éxito'})
-
+    
+    def get_success_message(self, cleaned_data):
+        return self.success_message
     
     
 
