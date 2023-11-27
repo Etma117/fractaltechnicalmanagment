@@ -8,44 +8,42 @@
       <div class = "col-lg-12">
         <h1 style="color: white;">Todos los Accesorios</h1>
         
-          {% if messages %}
-              {% for message in messages%}
-                {%if "Accesorio eliminado" in message%}
-                    <div class="alert alert-danger" role="alert"> <!--Mensaje de error, modificacion, etc-->
-                    {{message | safe}}
-                    </div>
-                {%else%}
-                  <div class="alert alert-info" role="alert"> <!--Mensaje de error, modificacion, etc-->
-                    {{message | safe}}
-                  </div>
-                  {%endif%}    
-              {% endfor%}
-            
-          {% endif %}
-        
+        {% if messages %}
+          <div class="messages">
+            {% for message in messages %}
+              {% if 'error' in message.tags or 'warning' in message.tags %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+              {% elif 'success' in message.tags %}
+                <div class="alert alert-info" role="alert">{{ message }}</div>
+              {% else %}
+                <div class="alert" role="alert">{{ message }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
     </div>  
 
     {% for Accesorio in Accesorio %}
-    <div class="col-sm-3 col-lg-3">
-      <div class="dash-unit">
-        <dtitle>{{ Accesorio.categoria }}</dtitle>
-        <hr>
-    <div class="thumbnail">
-      <img src="{{ Accesorio.imagen.url }}" class="img-thumbnail" width="50" height="50"  alt="{{ Accesorio.modelo }}">
-    </div><!-- /thumbnail -->
-    <h1>{{ Accesorio.marca }}</h1>
-    <h3>{{ Accesorio.modelo }}</h3>
-    <p>{{ Accesorio.descripcion }}</p>
-    <p>Precio: {{ Accesorio.precio }}</p>
-      <!-- Otros detalles del producto -->
-      <div atyle="display: flex;">
-        <a href= "{% url 'AccesorioEditar' pk=Accesorio.id %}" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
-        <a href = "{% url 'AccesorioEliminar' pk=Accesorio.id %}"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
+      <div class="col-sm-3 col-lg-3">
+        <div class="dash-unit">
+          <dtitle>{{ Accesorio.categoria }}</dtitle>
+          <hr>
+          <div class="thumbnail">
+            <img src="{{ Accesorio.imagen.url }}" class="img-thumbnail" width="50" height="50"  alt="{{ Accesorio.modelo }}">
+          </div><!-- /thumbnail -->
+          <h1>{{ Accesorio.marca }}</h1>
+          <h3>{{ Accesorio.modelo }}</h3>
+          <p>Precio: {{ Accesorio.precio }}</p>
+          <p>En stock: {{ Accesorio.existencias}}</p>
+          <!-- Otros detalles del producto -->
+          <div atyle="display: flex;">
+            <a href= "{% url 'AccesorioEditar' pk=Accesorio.id %}" class= "btn btn-success" type="button" style="flex: 1; margin: 5px;">Editar</a>
+            <a href = "{% url 'AccesorioEliminar' pk=Accesorio.id %}"class="btn btn-danger" type="submit" style="flex: 1; margin: 5px;">Eliminar</a> 
+        </div>
       </div>
-    </div>
-    </div>
-     {% endfor %}
+      </div>
+    {% endfor %}
       
     
 
@@ -69,22 +67,29 @@
     <a href="{% url 'AccesorioCrear' %}" class="btn btn-success" role="button"> Crear Nuevo </a>
  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
     {%  if messages %}
-      {% for m in messages %}
+      {% for message in messages %}
         <script>
-          {% if "Accesorio eliminado" in m %}
+          {% if 'error' in message.tags or 'warning' in message.tags %}
               Swal.fire({
                 "title": "Se ha eliminado",
-                "text" : "{{ m }}",
-                "icon" : "danger"
+                "text" : "{{ message }}",
+                "icon" : "error"
               })
+          {% elif 'success' in message.tags %}    
+            Swal.fire({
+              "title": "Felicidades",
+              "text" : "{{ message }}",
+              "icon" : "success"
+            })
           {% else %}
               Swal.fire({
-                "title": "Felicitaciones",
-                "text" : "{{ m }}",
-                "icon" : "success"
+                "title": "Información Importante",
+                "text" : "{{ message }}",
+                "icon" : "warning"
               })
         {% endif %}
-        </script>
+
+       </script>
       {% endfor %}
     {% endif %}
 

@@ -39,16 +39,12 @@ class AccesorioListar(LoginRequiredMixin, ListView):
     login_url = 'login'  # URL de inicio de sesión
     redirect_field_name = 'next'  # Nombre del campo de redireccionamiento
 
-    
-
-class AccesorioCrearView(LoginRequiredMixin, SuccessMessageMixin, CreateView, PermissionRequiredMixin):
+class AccesorioCrearView(LoginRequiredMixin,CreateView, PermissionRequiredMixin):
     model = Accesorio
     template_name = 'crear_Accesorio.html'
     context_object_name = 'Accesorio'
     form_class = AccesorioForm
     success_url = reverse_lazy('accesorios')
-    
-    success_message = 'Accesorio Creado...'
 
     login_url = 'login'  # URL de inicio de sesión
     redirect_field_name = 'next'  # Nombre del campo de redireccionamiento
@@ -56,25 +52,29 @@ class AccesorioCrearView(LoginRequiredMixin, SuccessMessageMixin, CreateView, Pe
     permission_required = 'catalogs.create_accesorio'
     raise_exception = True  
 
+    def form_valid(self, form):
+        messages.success(self.request, 'El objeto se ha Creado exitosamente.')
+        return super().form_valid(form)
    
-class AccesorioEditarView(LoginRequiredMixin,PermissionRequiredMixin, SuccessMessageMixin, UpdateView,):
+class AccesorioEditarView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView,):
     model = Accesorio
     template_name = 'crear_Accesorio.html'
     form_class =AccesorioForm
     success_url = reverse_lazy('accesorios')
-    success_message = 'Accesorio actualizado correctamente...'
-
+   
     login_url = 'login'  # URL de inicio de sesión
     redirect_field_name = 'next'  # Nombre del campo de redireccionamiento
 
     permission_required = 'catalogs.change_accesorio'
     raise_exception = True  
 
+    def form_valid(self, form):
+        messages.success(self.request, 'El objeto se ha actualizado exitosamente.')
+        return super().form_valid(form)
 
-class AccesorioEliminarView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
+class AccesorioEliminarView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model=Accesorio   
     template_name = 'eliminar_Accesorio.html'
-    success_message = 'Accesorio eliminado'
     success_url = reverse_lazy('accesorios')
     
 
@@ -84,9 +84,9 @@ class AccesorioEliminarView(LoginRequiredMixin, PermissionRequiredMixin, Success
     permission_required = 'catalogs.delete_accesorio'
     raise_exception = True  
     
-    def get_success_message(self, cleaned_data):
-        return self.success_message
-    
+    def form_valid(self, form):
+        messages.info(self.request, 'El objeto se ha eliminado.')
+        return super().form_valid(form)
     
 
    
